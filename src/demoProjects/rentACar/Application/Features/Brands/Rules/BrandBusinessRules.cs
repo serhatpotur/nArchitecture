@@ -21,6 +21,8 @@ namespace Application.Features.Brands.Rules
 
         public async Task BrandNameCanNotBeDuplicatedWhenInserted(string name)
         {
+            // Aynı marka adından sadece 1 tane olabilir. Bunun kontrolünü yaptık..
+
             IPaginate<Brand> result = await _brandRepository.GetListAsync(b => b.Name == name);
             if (result.Items.Any()) throw new BusinessException("Brand name exists.");
         }
