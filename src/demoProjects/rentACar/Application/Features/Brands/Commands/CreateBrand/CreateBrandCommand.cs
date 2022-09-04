@@ -31,11 +31,12 @@ namespace Application.Features.Brands.Commands.CreateBrand
 
             public async Task<CreatedBrandDto> Handle(CreateBrandCommand request, CancellationToken cancellationToken)
             {
+                // BusinessRules ile eklenen markanın kontrolünü yaptık
                 await _brandBusinessRules.BrandNameCanNotBeDuplicatedWhenInserted(request.Name);
 
-                Brand mappedBrand = _mapper.Map<Brand>(request);
-                Brand createdBrand = await _brandRepository.AddAsync(mappedBrand);
-                CreatedBrandDto createdBrandDto = _mapper.Map<CreatedBrandDto>(createdBrand);
+                Brand mappedBrand = _mapper.Map<Brand>(request); // Brandı mappledik
+                Brand createdBrand = await _brandRepository.AddAsync(mappedBrand); // Veritabanına ekledik
+                CreatedBrandDto createdBrandDto = _mapper.Map<CreatedBrandDto>(createdBrand); //Veritabanına eklediğimiz nesineyi Dtoya mappledik
 
                 return createdBrandDto;
 
